@@ -23,7 +23,6 @@ private struct WindowConfigurator: NSViewRepresentable {
         DispatchQueue.main.async {
             NSApplication.shared.activate(ignoringOtherApps: true)
             if let window = view.window {
-                window.level = .floating
                 window.titlebarAppearsTransparent = true
                 window.isMovableByWindowBackground = true
                 window.standardWindowButton(.zoomButton)?.isHidden = true
