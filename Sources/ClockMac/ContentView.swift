@@ -1,5 +1,15 @@
 import SwiftUI
 
+private enum ClaudeTheme {
+    static let background = Color(red: 0.96, green: 0.95, blue: 0.92)      // #F5F2EB bone
+    static let surface    = Color(red: 0.93, green: 0.91, blue: 0.86)      // subtle divider wash
+    static let accent     = Color(red: 0.85, green: 0.46, blue: 0.34)      // #D97757 crail
+    static let accentHover = Color(red: 0.78, green: 0.40, blue: 0.29)
+    static let ink        = Color(red: 0.17, green: 0.16, blue: 0.15)      // #2C2928
+    static let inkMuted   = Color(red: 0.45, green: 0.43, blue: 0.40)
+    static let hairline   = Color(red: 0.80, green: 0.76, blue: 0.70)
+}
+
 struct ContentView: View {
     @State private var now = Date()
     @State private var displayed = Date()
@@ -18,7 +28,7 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack(spacing: 14) {
+        VStack(spacing: 18) {
             HStack(alignment: .top, spacing: 18) {
                 ClockColumn(
                     title: localTitle,
@@ -45,28 +55,43 @@ struct ContentView: View {
                 )
             }
 
-            HStack(spacing: 10) {
+            HStack(spacing: 8) {
                 Button(action: toggleEditing) {
-                    Label(isEditing ? "Готово" : "Редактировать",
-                          systemImage: isEditing ? "checkmark.circle" : "pencil")
+                    Text(isEditing ? "Готово" : "Редактировать")
+                        .font(.system(size: 13, weight: .medium))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 7)
+                        .foregroundStyle(Color.white)
+                        .background(ClaudeTheme.accent)
+                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.plain)
 
                 if isEditing || !Calendar.current.isDate(displayed, equalTo: now, toGranularity: .minute) {
                     Button {
                         displayed = Date()
                         now = displayed
                     } label: {
-                        Label("Сейчас", systemImage: "arrow.counterclockwise")
+                        Text("Сейчас")
+                            .font(.system(size: 13, weight: .medium))
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .foregroundStyle(ClaudeTheme.ink)
+                            .background(Color.clear)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .stroke(ClaudeTheme.hairline, lineWidth: 1)
+                            )
                     }
-                    .buttonStyle(.bordered)
+                    .buttonStyle(.plain)
                 }
             }
-            .font(.callout)
         }
-        .padding(18)
+        .padding(.horizontal, 24)
+        .padding(.vertical, 20)
         .frame(width: 560)
-        .background(.ultraThinMaterial)
+        .background(ClaudeTheme.background)
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         .onAppear {
             displayed = now
         }
@@ -80,7 +105,7 @@ struct ContentView: View {
 
     private var divider: some View {
         Rectangle()
-            .fill(Color.secondary.opacity(0.2))
+            .fill(ClaudeTheme.hairline)
             .frame(width: 1, height: 86)
     }
 
@@ -103,13 +128,15 @@ private struct ClockColumn: View {
     let isEditing: Bool
 
     var body: some View {
-        VStack(spacing: 6) {
-            VStack(spacing: 1) {
+        VStack(spacing: 8) {
+            VStack(spacing: 2) {
                 Text(title)
-                    .font(.headline)
-                Text(subtitle)
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .font(.system(size: 14, weight: .semibold, design: .serif))
+                    .foregroundStyle(ClaudeTheme.ink)
+                Text(subtitle.uppercased())
+                    .font(.system(size: 9, weight: .medium, design: .default))
+                    .tracking(1.2)
+                    .foregroundStyle(ClaudeTheme.inkMuted)
             }
 
             if isEditing {
@@ -125,13 +152,15 @@ private struct ClockColumn: View {
                 .frame(maxWidth: 110)
             } else {
                 Text(timeString)
-                    .font(.system(size: 40, weight: .semibold, design: .rounded))
+                    .font(.system(size: 38, weight: .regular, design: .serif))
                     .monospacedDigit()
+                    .foregroundStyle(ClaudeTheme.ink)
             }
 
             Text(dateString)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+                .font(.system(size: 11, design: .serif))
+                .italic()
+                .foregroundStyle(ClaudeTheme.inkMuted)
         }
         .frame(maxWidth: .infinity)
     }
