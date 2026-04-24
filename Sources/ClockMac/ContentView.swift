@@ -18,8 +18,8 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack(spacing: 14) {
-            HStack(alignment: .top, spacing: 18) {
+        VStack(spacing: 10) {
+            HStack(alignment: .top, spacing: 8) {
                 ClockColumn(
                     title: localTitle,
                     subtitle: "локальное",
@@ -64,9 +64,9 @@ struct ContentView: View {
             }
             .font(.callout)
         }
-        .padding(18)
-        .frame(width: 560)
-        .background(.ultraThinMaterial)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 14)
+        .frame(width: 380)
         .onAppear {
             displayed = now
         }
@@ -81,7 +81,7 @@ struct ContentView: View {
     private var divider: some View {
         Rectangle()
             .fill(Color.secondary.opacity(0.2))
-            .frame(width: 1, height: 86)
+            .frame(width: 1, height: 70)
     }
 
     private func toggleEditing() {
@@ -103,12 +103,12 @@ private struct ClockColumn: View {
     let isEditing: Bool
 
     var body: some View {
-        VStack(spacing: 6) {
-            VStack(spacing: 1) {
+        VStack(spacing: 4) {
+            VStack(spacing: 0) {
                 Text(title)
-                    .font(.headline)
+                    .font(.system(size: 12, weight: .medium))
                 Text(subtitle)
-                    .font(.caption2)
+                    .font(.system(size: 9))
                     .foregroundStyle(.secondary)
             }
 
@@ -122,15 +122,15 @@ private struct ClockColumn: View {
                 .labelsHidden()
                 .environment(\.timeZone, timeZone)
                 .environment(\.locale, Locale(identifier: "ru_RU"))
-                .frame(maxWidth: 110)
+                .frame(maxWidth: 90)
             } else {
                 Text(timeString)
-                    .font(.system(size: 40, weight: .semibold, design: .rounded))
+                    .font(.system(size: 30, weight: .semibold, design: .rounded))
                     .monospacedDigit()
             }
 
             Text(dateString)
-                .font(.caption)
+                .font(.system(size: 10))
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)
