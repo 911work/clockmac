@@ -1,13 +1,5 @@
 import SwiftUI
 
-private enum ClaudeTheme {
-    static let tint       = Color(red: 0.96, green: 0.95, blue: 0.92).opacity(0.35) // cream veil
-    static let accent     = Color(red: 0.85, green: 0.46, blue: 0.34)                // #D97757 crail
-    static let ink        = Color(red: 0.17, green: 0.16, blue: 0.15)
-    static let inkMuted   = Color(red: 0.45, green: 0.43, blue: 0.40)
-    static let hairline   = Color(red: 0.80, green: 0.76, blue: 0.70).opacity(0.55)
-}
-
 struct ContentView: View {
     @AppStorage("tzIdsCSV") private var tzIdsCSV: String = ""
     @State private var timeZoneIds: [String] = []
@@ -25,7 +17,7 @@ struct ContentView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 14) {
-                HStack(alignment: .top, spacing: 14) {
+                HStack(alignment: .top, spacing: 18) {
                     ForEach(Array(timeZoneIds.enumerated()), id: \.offset) { idx, _ in
                         ClockColumn(
                             timeZoneId: Binding(
@@ -37,7 +29,7 @@ struct ContentView: View {
                         )
                         if idx < timeZoneIds.count - 1 {
                             Rectangle()
-                                .fill(ClaudeTheme.hairline)
+                                .fill(Color.secondary.opacity(0.2))
                                 .frame(width: 1, height: 86)
                         }
                     }
@@ -49,30 +41,15 @@ struct ContentView: View {
                         displayed = Date()
                         now = displayed
                     } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "arrow.counterclockwise")
-                                .font(.system(size: 10, weight: .medium))
-                            Text("Сейчас")
-                                .font(.system(size: 12, weight: .medium))
-                        }
-                        .foregroundStyle(ClaudeTheme.ink)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(
-                            RoundedRectangle(cornerRadius: 999, style: .continuous)
-                                .fill(Color.white.opacity(0.35))
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 999, style: .continuous)
-                                .stroke(ClaudeTheme.hairline, lineWidth: 1)
-                        )
+                        Label("Сейчас", systemImage: "arrow.counterclockwise")
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
                     .transition(.opacity.combined(with: .move(edge: .bottom)))
                 }
             }
-            .padding(.horizontal, 22)
-            .padding(.bottom, 16)
+            .padding(.horizontal, 18)
+            .padding(.bottom, 14)
 
             IconButton(
                 systemName: isEditing ? "checkmark" : "pencil",
@@ -84,8 +61,7 @@ struct ContentView: View {
             .padding(.trailing, 12)
         }
         .frame(width: 560)
-        .background(ClaudeTheme.tint)
-        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .background(.ultraThinMaterial)
         .animation(.easeInOut(duration: 0.18), value: isEditing)
         .animation(.easeInOut(duration: 0.18), value: isOffRealTime)
         .onAppear {
@@ -134,17 +110,14 @@ private struct IconButton: View {
         Button(action: action) {
             Image(systemName: systemName)
                 .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(active ? Color.white : ClaudeTheme.ink)
+                .foregroundStyle(active ? Color.white : Color.primary)
                 .frame(width: 22, height: 22)
                 .background(
                     Circle().fill(
                         active
-                            ? ClaudeTheme.accent
-                            : (hovering ? Color.white.opacity(0.55) : Color.white.opacity(0.25))
+                            ? Color.accentColor
+                            : (hovering ? Color.primary.opacity(0.15) : Color.primary.opacity(0.08))
                     )
-                )
-                .overlay(
-                    Circle().stroke(ClaudeTheme.hairline, lineWidth: active ? 0 : 1)
                 )
         }
         .buttonStyle(.plain)
@@ -164,18 +137,16 @@ private struct ClockColumn: View {
     }
 
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) {
             Button {
                 showPicker.toggle()
             } label: {
-                VStack(spacing: 2) {
+                VStack(spacing: 1) {
                     Text(cityName(for: timeZoneId))
-                        .font(.system(size: 14, weight: .semibold, design: .serif))
-                        .foregroundStyle(ClaudeTheme.ink)
+                        .font(.headline)
                     Text(offsetLabel)
-                        .font(.system(size: 9, weight: .medium))
-                        .tracking(1.2)
-                        .foregroundStyle(ClaudeTheme.inkMuted)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
                 }
                 .contentShape(Rectangle())
             }
@@ -200,15 +171,13 @@ private struct ClockColumn: View {
                 .frame(maxWidth: 110)
             } else {
                 Text(timeString)
-                    .font(.system(size: 38, weight: .regular, design: .serif))
+                    .font(.system(size: 40, weight: .semibold, design: .rounded))
                     .monospacedDigit()
-                    .foregroundStyle(ClaudeTheme.ink)
             }
 
             Text(dateString)
-                .font(.system(size: 11, design: .serif))
-                .italic()
-                .foregroundStyle(ClaudeTheme.inkMuted)
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)
     }
@@ -334,7 +303,7 @@ private struct TimeZoneRow: View {
                 if isSelected {
                     Image(systemName: "checkmark")
                         .font(.system(size: 10, weight: .bold))
-                        .foregroundStyle(ClaudeTheme.accent)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
             .padding(.horizontal, 12)
