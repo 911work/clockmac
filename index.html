@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birlay — Рекрутёры × Школы</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --lightest-beige:#fcfaf7;--light-beige:#faf6f1;--mid-beige:#f3ebe1;--dark-beige:#ebe3d9;--darkest-beige:#dfd7cd;
+  --white:#ffffff;--lightest-grey:#dcdad7;--light-grey:#9c9b9a;--mid-grey:#737271;--dark-grey:#383737;--darkest-grey:#242323;--black:#000000;
+  --clover-500:#50e850;--clover-300:#97f197;--clover-100:#dbfadb;
+  --pumpkin-500:#ff7c40;--pumpkin-300:#ffb28f;--pumpkin-100:#ffe7db;
+  --daffodil-500:#ffc740;--daffodil-300:#ffdd8f;--daffodil-100:#fff4db;
+  --spicy-500:#ff3300;--spicy-300:#ff8566;--spicy-100:#ffd6cc;
+  --malibu-500:#37d7ff;--malibu-300:#85e7ff;--malibu-100:#d6f7ff;
+  --cobalt-500:#4770ff;--cobalt-300:#8fa7ff;--cobalt-100:#dbe3ff;
+  --violet-500:#aa45f0;--violet-300:#dcb3f9;--violet-100:#f6ecfd;
+  --bg:var(--lightest-beige);--surface:var(--white);--border:var(--dark-beige);
+  --fg:var(--black);--fg-body:var(--darkest-grey);--fg-muted:var(--mid-grey);--fg-faint:var(--light-grey);
+  --font-display:'DM Serif Display','Seasonmixtrial','Georgia',serif;
+  --font-body:'Geist','Helvetica Neue',system-ui,sans-serif;
+  --font-mono:'DM Mono','SF Mono',monospace;
+  --radius-md:0.5rem;--radius-xl:1rem;
+  --shadow-sm:0 1px 2px rgba(36,35,35,0.05),0 0 0 1px rgba(36,35,35,0.04);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg-body);font-family:var(--font-body);font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+.container{max-width:1100px;margin:0 auto;padding:3.5rem 5%}
+
+/* Typography */
+h1{font-family:var(--font-display);font-weight:400;font-size:2.8rem;line-height:1.1;color:var(--fg);margin-bottom:.5rem}
+h2{font-family:var(--font-display);font-weight:400;font-size:2rem;line-height:1.15;color:var(--fg);margin-bottom:.25rem}
+h3{font-family:var(--font-display);font-weight:400;font-size:1.4rem;line-height:1.2;color:var(--fg);margin-bottom:.25rem}
+.lead{font-size:1.05rem;color:var(--fg-muted);font-weight:300;max-width:620px;margin-bottom:1.5rem}
+.section-label{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:.75rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--fg);margin-bottom:.75rem}
+.section-label::before{content:'';display:inline-block;width:10px;height:10px;border-radius:2px}
+.section-label.orange::before{background:var(--pumpkin-500)}
+.section-label.green::before{background:var(--clover-500)}
+.section-label.red::before{background:var(--spicy-500)}
+.section-label.blue::before{background:var(--malibu-500)}
+.section-label.violet::before{background:var(--violet-500)}
+.section-label.yellow::before{background:var(--daffodil-500)}
+
+/* Card */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:1.75rem;margin-bottom:1.5rem}
+.card h3{margin-bottom:.15rem}
+.card .sub{font-family:var(--font-mono);font-size:.72rem;color:var(--fg-faint);margin-bottom:1.25rem}
+
+/* KPI strip */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2.5rem}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:1.25rem;text-align:center}
+.kpi b{font-family:var(--font-display);font-size:2rem;display:block;line-height:1.1;margin-bottom:.1rem}
+.kpi span{font-family:var(--font-mono);font-size:.68rem;color:var(--fg-faint);text-transform:uppercase;letter-spacing:.04em}
+
+/* Callout */
+.callout{background:var(--pumpkin-100);border-radius:var(--radius-md);padding:1rem 1.25rem;margin-bottom:1.75rem;font-size:.9rem;color:var(--dark-grey);line-height:1.6}
+.callout strong{color:var(--darkest-grey)}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead th{padding:.6rem .75rem;text-align:left;font-family:var(--font-mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-faint);border-bottom:2px solid var(--darkest-beige)}
+th.c{text-align:center}
+tbody td{padding:.7rem .75rem;border-bottom:1px solid var(--dark-beige);vertical-align:middle;color:var(--fg-body)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--light-beige)}
+td.c{text-align:center}
+
+/* Tier badges */
+.t{display:inline-block;padding:1px 7px;border-radius:4px;font-family:var(--font-mono);font-size:.65rem;font-weight:500;letter-spacing:.04em}
+.t1{background:var(--clover-100);color:#1a7a2a}
+.t2{background:var(--cobalt-100);color:#3358cc}
+.t3{background:var(--daffodil-100);color:#8a6a10}
+.t4{background:var(--spicy-100);color:#cc2200}
+.t5{background:var(--violet-100);color:#7733b0}
+
+/* Metric colors */
+.lo{color:#1a7a2a;font-weight:600}
+.mi{color:#8a6a10;font-weight:600}
+.hi{color:#cc2200;font-weight:600}
+
+/* Matrix */
+.mx td{text-align:center;line-height:1.35;font-size:.82rem}
+.mx td:first-child{text-align:left;font-weight:500;color:var(--fg-muted);background:transparent!important}
+.mg{background:var(--clover-100);color:#1a7a2a}
+.my{background:var(--daffodil-100);color:#8a6a10}
+.mr{background:var(--spicy-100);color:#cc2200}
+
+/* School tiers */
+.pill{display:inline-block;padding:2px 8px;border-radius:4px;font-family:var(--font-mono);font-size:.65rem;font-weight:500}
+.pill.a{background:var(--clover-100);color:#1a7a2a}
+.pill.b{background:var(--cobalt-100);color:#3358cc}
+.pill.c{background:var(--daffodil-100);color:#8a6a10}
+
+/* Separator */
+.sep{height:1px;background:var(--darkest-beige);margin:3rem 0}
+
+/* Gap row */
+.gap td{padding:6px;border:none;background:transparent!important}
+
+/* Footer */
+.ft{margin-top:2.5rem;padding-top:1.25rem;border-top:1px solid var(--darkest-beige);font-family:var(--font-mono);font-size:.68rem;color:var(--fg-faint);line-height:1.9}
+.ft strong{color:var(--fg-muted)}
+
+@media(max-width:768px){
+  .container{padding:2rem 4%}
+  h1{font-size:2rem}
+  .kpis{grid-template-columns:1fr 1fr}
+  table{font-size:.8rem}
+}
+@media print{body{background:#fff}.card,.kpi{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div style="margin-bottom:2.5rem">
+  <h1>Рекрутёры <em style="font-style:italic;color:var(--pumpkin-500)">×</em> Школы</h1>
+  <p class="lead">Приоритизация рынков Birlay: откуда привлекать рекрутёров и в каких странах ЕС подписывать VET-школы.</p>
+  <span class="section-label orange">Данные 2024 · верифицированные источники</span>
+</div>
+
+<!-- KPI -->
+<div class="kpis">
+  <div class="kpi"><b style="color:var(--pumpkin-500)">11.7M</b><span>Шенген-заявок</span></div>
+  <div class="kpi"><b style="color:var(--clover-500)">549K</b><span>Education-ВНЖ</span></div>
+  <div class="kpi"><b style="color:var(--daffodil-500)">14.8%</b><span>Средний отказ</span></div>
+  <div class="kpi"><b style="color:var(--malibu-500)">3.5M</b><span>Первых ВНЖ</span></div>
+</div>
+
+<!-- ═══ ЧАСТЬ 1 ═══ -->
+<span class="section-label green">Часть 1</span>
+<h2>Откуда рекрутёры</h2>
+<p class="lead">Tier-лист стран-источников: объём потока × Шенген-одобрение × платёжеспособность мигрантов</p>
+
+<div class="callout"><strong>Методология:</strong> Публичной статистики по VET-визам нет. Tier-лист = корреляция Шенген-отказа 2024 (DG HOME), education-ВНЖ (Eurostat) и объёма/платёжеспособности. Студенческие визы (тип D) одобряются лучше туристических — есть зачисление и гарантии.</div>
+
+<div class="card">
+<h3>Tier-лист рекрутёрских рынков</h3>
+<div class="sub">Шенген: European Commission DG HOME 2024 · ВНЖ: Eurostat first permits 2024</div>
+<table>
+<thead><tr><th></th><th>Страна</th><th class="c">Отказ</th><th class="c">Заявки</th><th>Комментарий</th></tr></thead>
+<tbody>
+<!-- ── ВОСТОЧНАЯ АЗИЯ ── -->
+<tr><td colspan="5" style="background:var(--light-beige);font-family:var(--font-mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);padding:.5rem .75rem;border:none">Восточная и Юго-Восточная Азия</td></tr>
+<tr><td><span class="t t1">T1</span></td><td>🇨🇳 Китай</td><td class="c lo">4.6%</td><td class="c">1.78M</td><td>№1 по объёму. 34% ВНЖ = education. Нужен китайский</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇹🇭 Таиланд</td><td class="c lo">&lt;10%</td><td class="c">top-10 DE</td><td>Низкий отказ, далёкий рынок. Англоязычный маркетинг</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇮🇩 Индонезия</td><td class="c lo">~8%</td><td class="c">~80K</td><td>Огромное население (275M). Низкий отказ. Англоязычный</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇻🇳 Вьетнам</td><td class="c lo">~8%</td><td class="c">~60K</td><td>Растущий поток. Низкий отказ. Сильная трудовая миграция</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇵🇭 Филиппины</td><td class="c mi">~17%</td><td class="c">~120K</td><td>Англоязычные, культура трудовой миграции, healthcare</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇲🇾 Малайзия</td><td class="c lo">&lt;10%</td><td class="c">~50K</td><td>Низкий отказ, платёжеспособный, англоязычный</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇲🇲 Мьянма</td><td class="c mi">~20%</td><td class="c">малый</td><td>Малый поток, средний отказ. Нишевый</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇰🇭 Камбоджа</td><td class="c mi">~20%</td><td class="c">малый</td><td>Малый поток</td></tr>
+
+<!-- ── ЮЖНАЯ АЗИЯ ── -->
+<tr><td colspan="5" style="background:var(--light-beige);font-family:var(--font-mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);padding:.5rem .75rem;border:none">Южная Азия</td></tr>
+<tr><td><span class="t t2">T2</span></td><td>🇮🇳 Индия</td><td class="c mi">~15%</td><td class="c">1.1M</td><td>№1 по education-ВНЖ (52.9K study). Англоязычные</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇵🇰 Пакистан</td><td class="c hi">~47%</td><td class="c">знач.</td><td>Высокий отказ. Источники: до 62%+. Только 100% предоплата</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇧🇩 Бангладеш</td><td class="c hi">54.9%</td><td class="c">знач.</td><td>Макс. отказ в мире. +11.6пп/год. 47% ВНЖ = Италия</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇱🇰 Шри-Ланка</td><td class="c hi">~28%</td><td class="c">~40K</td><td>Высокий отказ. Средний поток</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇳🇵 Непал</td><td class="c hi">~35%</td><td class="c">~30K</td><td>Высокий отказ. Малый поток. Сильная миграционная мотивация</td></tr>
+
+<!-- ── БЛИЖНИЙ ВОСТОК ── -->
+<tr><td colspan="5" style="background:var(--light-beige);font-family:var(--font-mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);padding:.5rem .75rem;border:none">Ближний Восток</td></tr>
+<tr><td><span class="t t1">T1</span></td><td>🇹🇷 Турция</td><td class="c mi">14.5%</td><td class="c">1.17M</td><td>2M турок в ЕС. Массово на Ausbildung. Нужен турецкий</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇸🇦 Сауд. Аравия</td><td class="c lo">&lt;10%</td><td class="c">top-10 DE</td><td>Платёжеспособные. Низкий отказ. Нишевая VET-мотивация</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇮🇷 Иран</td><td class="c hi">26%</td><td class="c">знач.</td><td>Снижается (было 30.3%). Платёжеспособный сегмент</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇮🇶 Ирак</td><td class="c hi">~30%</td><td class="c">~40K</td><td>Высокий отказ. Значительная диаспора в DE</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇯🇴 Иордания</td><td class="c hi">~25%</td><td class="c">~30K</td><td>Средний отказ. Малый рынок</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇱🇧 Ливан</td><td class="c hi">~28%</td><td class="c">~25K</td><td>Экон. кризис, высокая мотивация. Средне-высокий отказ</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇸🇾 Сирия</td><td class="c hi">27%</td><td class="c">малый</td><td>Снижается (было 46%). В основном через asylum, не VET</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇪🇬 Египет</td><td class="c mi">~18%</td><td class="c">~200K</td><td>Крупный поток. №4 в Германии (52K заявок). Средний отказ</td></tr>
+
+<!-- ── СНГ / КАВКАЗ / ЦА ── -->
+<tr><td colspan="5" style="background:var(--light-beige);font-family:var(--font-mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);padding:.5rem .75rem;border:none">СНГ / Кавказ / Центральная Азия</td></tr>
+<tr><td><span class="t t1">T1</span></td><td>🇷🇺 Россия</td><td class="c lo">7.5%</td><td class="c">606K</td><td>Платёжеспособные, русскоязычный маркетинг — прямая сила</td></tr>
+<tr><td><span class="t t1">T1</span></td><td>🇰🇿 Казахстан</td><td class="c lo">~9%</td><td class="c">179K</td><td>Русскоязычный, рост +12.8% YoY, средний класс</td></tr>
+<tr><td><span class="t t2">T2</span></td><td>🇺🇦 Украина</td><td class="c" style="color:var(--cobalt-500)">безвиз</td><td class="c">—</td><td>295K first permits (№1 ЕС). 7M диаспора</td></tr>
+<tr><td><span class="t t2">T2</span></td><td>🇧🇾 Беларусь</td><td class="c lo">3.4%</td><td class="c">~52K</td><td>Самый низкий отказ. Русскоязычные. Малый рынок</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇺🇿 Узбекистан</td><td class="c lo">~10%</td><td class="c">59K</td><td>Русскоязычный, молодой, растущий. 35M население</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇦🇲 Армения</td><td class="c lo">&lt;10%</td><td class="c">~150K</td><td>Волна эмиграции 2022+. Русскоязычный</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇬🇪 Грузия</td><td class="c lo">&lt;10%</td><td class="c">~80K</td><td>Русскоязычная диаспора — готовая аудитория</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇦🇿 Азербайджан</td><td class="c lo">~10%</td><td class="c">~90K</td><td>Платёжеспособный, русскоязычный</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇰🇬 Кыргызстан</td><td class="c lo">~12%</td><td class="c">~20K</td><td>Русскоязычный. Малый рынок</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇹🇯 Таджикистан</td><td class="c mi">~15%</td><td class="c">~15K</td><td>Русскоязычный. Малый рынок, низкая платёжеспособность</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇹🇲 Туркменистан</td><td class="c mi">~15%</td><td class="c">малый</td><td>Закрытая страна. Нишевый</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇲🇩 Молдова</td><td class="c" style="color:var(--cobalt-500)">безвиз</td><td class="c">—</td><td>Безвиз в ЕС. 2.5M население. Румынский/русский</td></tr>
+
+<!-- ── СЕВЕРНАЯ АФРИКА ── -->
+<tr><td colspan="5" style="background:var(--light-beige);font-family:var(--font-mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);padding:.5rem .75rem;border:none">Северная Африка</td></tr>
+<tr><td><span class="t t2">T2</span></td><td>🇲🇦 Марокко</td><td class="c mi">~18%</td><td class="c">~400K</td><td>188K first permits (№3 ЕС). 49% ВНЖ = Испания. Франц/араб</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇩🇿 Алжир</td><td class="c hi">35%</td><td class="c">~500K</td><td>83% ВНЖ = Франция. Высокий отказ но огромный поток</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇹🇳 Тунис</td><td class="c hi">~28%</td><td class="c">~150K</td><td>Средне-высокий отказ. Коридор Франция + Италия</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇱🇾 Ливия</td><td class="c hi">~30%</td><td class="c">малый</td><td>Нестабильность. Малый поток</td></tr>
+
+<!-- ── ЗАПАДНАЯ АФРИКА ── -->
+<tr><td colspan="5" style="background:var(--light-beige);font-family:var(--font-mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);padding:.5rem .75rem;border:none">Западная Африка</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇳🇬 Нигерия</td><td class="c hi">45.9%</td><td class="c">знач.</td><td>Каждый 2-й отказ. +5пп к 2023. Англоязычные. Только 100% предоплата</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇬🇭 Гана</td><td class="c hi">~48%</td><td class="c">~42K</td><td>Был 47.5% в 2023. Англоязычные. Очень высокий отказ</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇸🇳 Сенегал</td><td class="c hi">46.8%</td><td class="c">~100K</td><td>Ухудшается (+5.6пп). Франкоязычные. Коридор Франция</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇲🇱 Мали</td><td class="c hi">~46%</td><td class="c">малый</td><td>Очень высокий отказ. Малый рынок</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇬🇳 Гвинея</td><td class="c hi">~41%</td><td class="c">малый</td><td>Очень высокий отказ. Франкоязычные</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇨🇮 Кот-д'Ивуар</td><td class="c hi">~35%</td><td class="c">~50K</td><td>Франкоязычные. Высокий отказ</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇨🇲 Камерун</td><td class="c hi">~35%</td><td class="c">~30K</td><td>Франко/англоязычные. Высокий отказ</td></tr>
+
+<!-- ── ВОСТОЧНАЯ АФРИКА ── -->
+<tr><td colspan="5" style="background:var(--light-beige);font-family:var(--font-mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);padding:.5rem .75rem;border:none">Восточная и Южная Африка</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇪🇹 Эфиопия</td><td class="c hi">~30%</td><td class="c">~25K</td><td>Высокий отказ. 120M население. Малый поток в ЕС</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇰🇪 Кения</td><td class="c hi">~25%</td><td class="c">~30K</td><td>Англоязычные. Средне-высокий отказ</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇺🇬 Уганда</td><td class="c hi">~30%</td><td class="c">малый</td><td>Высокий отказ. Англоязычные. Малый рынок</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇹🇿 Танзания</td><td class="c hi">~30%</td><td class="c">малый</td><td>Высокий отказ. Англоязычные</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇿🇦 Южная Африка</td><td class="c lo">&lt;7%</td><td class="c">~80K</td><td>Исключение для Африки: отказ очень низкий. Англоязычные. Платёжеспособные</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇦🇴 Ангола</td><td class="c mi">~20%</td><td class="c">~15K</td><td>Португалоязычные. 92K уже в Португалии (№3). CPLP</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇲🇿 Мозамбик</td><td class="c mi">~22%</td><td class="c">малый</td><td>Португалоязычные. CPLP. Малый поток</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇨🇻 Кабо-Верде</td><td class="c mi">13.4%</td><td class="c">малый</td><td>Улучшился резко (было 24%). CPLP. Малый рынок</td></tr>
+
+<!-- ── БАЛКАНЫ / ВОСТОЧНАЯ ЕВРОПА ── -->
+<tr><td colspan="5" style="background:var(--light-beige);font-family:var(--font-mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);padding:.5rem .75rem;border:none">Балканы / Вост. Европа (non-EU)</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇷🇸 Сербия</td><td class="c" style="color:var(--cobalt-500)">безвиз</td><td class="c">—</td><td>Безвиз в Шенген (90 дн). 6.6M насел. Макс. мотивация к ЕС</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇽🇰 Косово</td><td class="c lo">~12%</td><td class="c">~40K</td><td>Безвиз с 2024. Малый рынок</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇲🇪 Черногория</td><td class="c" style="color:var(--cobalt-500)">безвиз</td><td class="c">—</td><td>Безвиз. 620K население. Микро-рынок</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇲🇰 Сев. Македония</td><td class="c" style="color:var(--cobalt-500)">безвиз</td><td class="c">—</td><td>Безвиз. 1.8M население</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇧🇦 Босния</td><td class="c" style="color:var(--cobalt-500)">безвиз</td><td class="c">—</td><td>Безвиз. 3.2M население</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇦🇱 Албания</td><td class="c" style="color:var(--cobalt-500)">безвиз</td><td class="c">—</td><td>Безвиз. 44.9% ВНЖ = Италия. 2.8M население</td></tr>
+
+<!-- ── ЛАТИНСКАЯ АМЕРИКА ── -->
+<tr><td colspan="5" style="background:var(--light-beige);font-family:var(--font-mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);padding:.5rem .75rem;border:none">Латинская Америка</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇧🇷 Бразилия</td><td class="c" style="color:var(--cobalt-500)">безвиз</td><td class="c">—</td><td>Безвиз 90 дн. 484K уже в Португалии (№1). CPLP. Португалоязычные</td></tr>
+<tr><td><span class="t t3">T3</span></td><td>🇨🇴 Колумбия</td><td class="c mi">~18%</td><td class="c">знач.</td><td>78.7% ВНЖ = Испания. Испаноязычные. Растущий поток</td></tr>
+<tr><td><span class="t t4">T4</span></td><td>🇪🇨 Эквадор</td><td class="c hi">29.6%</td><td class="c">~30K</td><td>Ухудшается (было 24.4%). Испаноязычные</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇵🇪 Перу</td><td class="c mi">~20%</td><td class="c">~25K</td><td>Испаноязычные. Средний отказ</td></tr>
+<tr><td><span class="t t5">T5</span></td><td>🇲🇽 Мексика</td><td class="c" style="color:var(--cobalt-500)">безвиз</td><td class="c">—</td><td>Безвиз. 130M население. Но мотивация к ЕС низкая (фокус USA)</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Matrix -->
+<div class="card">
+<h3>Матрица решений</h3>
+<div class="sub">🟢 активно привлекать · 🟡 с предоплатой · 🔴 только 100% до визы</div>
+<table class="mx">
+<thead><tr><th></th><th class="c">Отказ &lt;15%</th><th class="c">15–25%</th><th class="c">&gt;25%</th></tr></thead>
+<tbody>
+<tr><td>Поток &gt;500K</td><td class="mg">Китай · Россия · Турция</td><td class="my">Индия · Марокко · Египет</td><td class="mr">Алжир</td></tr>
+<tr><td>100–500K</td><td class="mg">Казахстан · Беларусь · Армения</td><td class="my">Филиппины · Украина (безвиз) · Колумбия · Тунис</td><td class="mr">Нигерия · Пакистан · Иран</td></tr>
+<tr><td>&lt;100K</td><td class="mg">Грузия · Азербайджан · Узбекистан · Индонезия · Вьетнам · Таиланд · Малайзия · Юж. Африка · Балканы (безвиз) · Бразилия (безвиз) · Молдова (безвиз) · Сербия (безвиз)</td><td class="my">Ангола · Кабо-Верде · Перу · Шри-Ланка</td><td class="mr">Бангладеш · Сенегал · Гана · Непал · Эквадор · Ирак · Эфиопия · Кения · Камерун</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ═══ ЧАСТЬ 2 ═══ -->
+<div class="sep"></div>
+
+<span class="section-label blue">Часть 2</span>
+<h2>Где подписывать школы</h2>
+<p class="lead">Страны ЕС, где VET-курсы дают визу/ВНЖ. Ранжирование: зрелость маршрута × объём входящего потока.</p>
+
+<div class="card">
+<h3>7 приоритетных стран ЕС</h3>
+<div class="sub">Маршрут VET → ВНЖ + реальная ситуация 2025-2026</div>
+<table>
+<thead><tr><th style="width:12%">Страна</th><th style="width:7%">Tier</th><th style="width:40%">VET → Виза/ВНЖ</th><th style="width:41%">Реальность + менеджер</th></tr></thead>
+<tbody>
+<tr><td>🇪🇸 Испания</td><td><span class="pill a">A</span></td><td>FP Superior = «superior studies» → работа 30ч/нед → рабочий ВНЖ. Виза на весь срок. Arraigo socioformativo — альтернатива.</td><td>108K+ студ. авторизаций (+43%). Реформа 2025: языковые закрыты, только FP. 561K permits (№1). <strong>Менеджер: испанский</strong></td></tr>
+<tr><td>🇩🇪 Германия</td><td><span class="pill a">A</span></td><td>Ausbildung: ВНЖ 2-3 года, оплата во время учёбы, 18 мес post-study. Лучший VET → ПМЖ.</td><td>545K permits (№2). B1 немецкий обязателен. €1,091/мес. Топ: CN (3%), TR, IN. <strong>Менеджер: немецкий</strong></td></tr>
+<tr><td>🇵🇹 Португалия</td><td><span class="pill b">B</span></td><td>Art. 92 — ВНЖ через IEFP/DGERT курс. D4/D5. 20ч/нед. 5 лет → гражданство.</td><td>Home market. 1.5M иностранцев. AIMA-бэклог 6-12 мес. <strong>Ваш язык: PT + RU</strong></td></tr>
+<tr><td>🇮🇹 Италия</td><td><span class="pill b">B</span></td><td>Виза D → VET. 20ч/нед. Финпорог €6K/год — минимальный в ЕС.</td><td>346K permits (№4). Коридоры: BD (47%), AL (45%). Questura тяжёлая. <strong>Менеджер: итальянский</strong></td></tr>
+<tr><td>🇫🇷 Франция</td><td><span class="pill c">C</span></td><td>VLS-TS → formation professionnelle. Post-study APS 12-24 мес (Master/PhD).</td><td>342K permits (№5). Алжир 83% = FR. VET менее отработан. <strong>Менеджер: французский</strong></td></tr>
+<tr><td>🇫🇮 Финляндия</td><td><span class="pill c">C</span></td><td>ВНЖ для vocational qualification. Post-study до 2 лет.</td><td>€7K/год non-EU с 2026. Малый рынок. <strong>Менеджер: английский</strong></td></tr>
+<tr><td>🇳🇱 Нидерланды</td><td><span class="pill c">C</span></td><td>VVR через IND. MBO формально. Zoekjaar 12 мес.</td><td>HBO/uni focus. MBO для non-EU ограничено. <strong>Менеджер: англ/нидерл.</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Corridors -->
+<div class="card">
+<h3>Коридоры: источник → школа</h3>
+<div class="sub">Существующие потоки (Eurostat 2024)</div>
+<table class="mx">
+<thead><tr><th>Источник</th><th class="c">🇪🇸</th><th class="c">🇩🇪</th><th class="c">🇵🇹</th><th class="c">🇮🇹</th><th class="c">🇫🇷</th></tr></thead>
+<tbody>
+<tr><td>🇨🇳 Китай</td><td class="mg">303K виз</td><td class="mg">263K, 3%</td><td class="my">Растёт</td><td class="my">Средний</td><td class="my">Средний</td></tr>
+<tr><td>🇹🇷 Турция</td><td class="my">Средний</td><td class="mg">215K, 34%</td><td class="my">Растёт</td><td class="my">Средний</td><td class="my">Средний</td></tr>
+<tr><td>🇮🇳 Индия</td><td class="mg">117K, +9%</td><td class="mg">143K, 18%</td><td class="mg">98K, №2</td><td class="my">Средний</td><td class="my">Средний</td></tr>
+<tr><td>🇲🇦 Марокко</td><td class="mg">150K, 49%</td><td class="my">Средний</td><td class="my">Средний</td><td class="my">Средний</td><td class="mg">Основной</td></tr>
+<tr><td>🇷🇺 Россия</td><td class="mg">98K, +17%</td><td class="my">Средний</td><td class="mg">Home</td><td class="my">Средний</td><td class="my">Средний</td></tr>
+<tr><td>🇧🇩 Бангладеш</td><td class="mr">Выс. отказ</td><td class="mr">Выс. отказ</td><td class="mr">Выс. отказ</td><td class="mg">47% ВНЖ</td><td class="mr">Выс. отказ</td></tr>
+<tr><td>🇨🇴 Колумбия</td><td class="mg">78.7% ВНЖ</td><td class="my">Средний</td><td class="my">Средний</td><td class="my">Средний</td><td class="my">Средний</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Recommendation -->
+<div class="callout">
+<strong>Запуск:</strong> Школы wave 1 — Испания, Германия, Португалия. Wave 2 — Италия, Франция. Рекрутёры wave 1 — русскоязычные (RU/KZ/BY/AM/GE/UZ = language-fit, все в зелёной зоне) + англоязычные (Индия, Филиппины, ЮАР, Индонезия, Вьетнам). Wave 2 — Турция, Египет (нужны local-менеджеры), Балканы (безвиз, малые но мотивированные), Бразилия (CPLP, home market PT). Страны T4 (Нигерия, Пакистан, Бангладеш, Гана, Сенегал) — только при 100% предоплате до визы.
+</div>
+
+<!-- Footer -->
+<div class="ft">
+<strong>Источники:</strong> European Commission DG HOME Visa Statistics 2024 · Eurostat migr_resfirst, migr_ressrath, migr_resvalid 2024 · HelloSafe Barometer Feb 2026 · AIMA Relatório 2024 · Henley Global Mobility Report 2025<br>
+<strong>Ограничения:</strong> Шенген-отказ ≠ отказ по студенческой визе. Нет разбивки education-ВНЖ по типу программы. Для стран без точных данных 2024 (~) — оценки по 2023 + региональным трендам. DG HOME публикует полный Excel, но в пресс-релизах — только выборочные страны. ЮАР, Ботсвана, Намибия — исключения с низким отказом в Африке.
+</div>
+
+</div>
+</body>
+</html>
