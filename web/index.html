@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VisaScore — AI-скоринг документов для визы и ВНЖ в ЕС</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◆</span>
+      <span>VisaScore</span>
+    </div>
+    <nav class="steps" id="stepNav">
+      <span class="step" data-step="scan">1 · Паспорт</span>
+      <span class="step" data-step="results">2 · Страны</span>
+      <span class="step" data-step="country">3 · Детали</span>
+      <span class="step" data-step="docs">4 · Документы</span>
+      <span class="step" data-step="status">5 · Статус</span>
+    </nav>
+  </header>
+
+  <main id="app">
+    <!-- STEP 1: SCAN -->
+    <section class="screen" data-screen="scan">
+      <div class="hero">
+        <h1>Сфотографируйте паспорт — остальное сделает AI</h1>
+        <p class="sub">Данные заполнятся автоматически, и вы сразу увидите страны ЕС с вероятностью одобрения визы или ВНЖ.</p>
+      </div>
+
+      <div class="scan-grid">
+        <label class="dropzone" id="passportDrop">
+          <input type="file" id="passportInput" accept="image/*" hidden />
+          <div class="dz-inner" id="dzInner">
+            <div class="dz-icon">📷</div>
+            <strong>Загрузите фото паспорта</strong>
+            <span>или перетащите изображение сюда</span>
+          </div>
+          <img id="passportPreview" alt="" hidden />
+        </label>
+
+        <form class="profile-card" id="profileForm" hidden>
+          <h3>Распознанные данные <span class="badge" id="ocrBadge">AI OCR</span></h3>
+          <div class="field"><label>Фамилия</label><input name="surname" required /></div>
+          <div class="field"><label>Имя</label><input name="given" required /></div>
+          <div class="field">
+            <label>Гражданство</label>
+            <select name="nationality" id="natSelect" required></select>
+          </div>
+          <div class="row">
+            <div class="field"><label>Пол</label>
+              <select name="sex"><option value="M">M</option><option value="F">F</option></select>
+            </div>
+            <div class="field"><label>Дата рождения</label><input name="dob" type="date" required /></div>
+          </div>
+          <div class="row">
+            <div class="field"><label>№ паспорта</label><input name="passportNo" required /></div>
+            <div class="field"><label>Действует до</label><input name="expiry" type="date" required /></div>
+          </div>
+          <button type="submit" class="btn primary">Подобрать страны →</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- STEP 2: RESULTS -->
+    <section class="screen" data-screen="results" hidden>
+      <div class="screen-head">
+        <h2>Страны для вашего профиля</h2>
+        <p class="sub" id="resultsSub"></p>
+      </div>
+      <div class="country-grid" id="countryGrid"></div>
+    </section>
+
+    <!-- STEP 3: COUNTRY DETAIL -->
+    <section class="screen" data-screen="country" hidden>
+      <button class="link-back" data-goto="results">← ко всем странам</button>
+      <div id="countryDetail"></div>
+    </section>
+
+    <!-- STEP 4: DOCS -->
+    <section class="screen" data-screen="docs" hidden>
+      <button class="link-back" data-goto="country">← к деталям страны</button>
+      <div class="screen-head">
+        <h2 id="docsTitle">Документы для загрузки</h2>
+        <p class="sub">Перетащите файл на каждый пункт или нажмите, чтобы выбрать. Когда всё готово — отправьте заявку.</p>
+      </div>
+      <div class="progress"><div class="progress-bar" id="docsProgress"></div></div>
+      <div class="docs-list" id="docsList"></div>
+      <button class="btn primary block" id="submitBtn" disabled>Отправить заявку на проверку</button>
+    </section>
+
+    <!-- STEP 5: STATUS -->
+    <section class="screen" data-screen="status" hidden>
+      <div class="status-card">
+        <div class="status-spinner" id="statusSpinner"></div>
+        <h2 id="statusTitle">Заявка отправлена на проверку</h2>
+        <p class="sub" id="statusSub"></p>
+        <ul class="timeline" id="statusTimeline"></ul>
+        <div class="ref">Номер заявки: <strong id="appRef"></strong></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
